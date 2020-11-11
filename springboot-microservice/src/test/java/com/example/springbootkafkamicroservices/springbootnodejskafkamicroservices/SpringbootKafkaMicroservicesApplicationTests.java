@@ -1,4 +1,4 @@
-package com.example.springbootkafkamicroservices.springbootkafkamicroservices;
+package com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

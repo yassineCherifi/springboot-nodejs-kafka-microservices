@@ -1,16 +1,12 @@
-package com.example.springbootkafkamicroservices.springbootkafkamicroservices.metier;
+package com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
-
-import java.beans.BeanProperty;
 
 @Service
 public class KafkaSender {

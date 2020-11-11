@@ -1,4 +1,4 @@
-package com.example.springbootkafkamicroservices.springbootkafkamicroservices.config;
+package com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.config;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

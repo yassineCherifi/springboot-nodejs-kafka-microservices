@@ -1,4 +1,4 @@
-package com.example.springbootkafkamicroservices.springbootkafkamicroservices;
+package com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
