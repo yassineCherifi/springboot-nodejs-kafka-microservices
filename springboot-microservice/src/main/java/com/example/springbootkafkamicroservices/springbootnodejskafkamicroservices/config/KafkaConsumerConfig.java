@@ -2,6 +2,7 @@ package com.example.springbootkafkamicroservices.springbootnodejskafkamicroservi
 
 import com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.dtos.UserDTO;
 import com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.models.User;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -16,13 +17,17 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
 
-    private final String bootstrapServers = "localhost:9092";
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
+
+    @Value("${spring.kafka.consumer.group-id}")
+    private String groupId;
 
     @Bean
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> props = new HashMap<>();
         props.put("bootstrap.servers", bootstrapServers);
-        props.put("group.id", "test");
+        props.put("group.id", groupId);
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
         props.put("session.timeout.ms", "30000");

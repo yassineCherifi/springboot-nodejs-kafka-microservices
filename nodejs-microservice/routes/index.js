@@ -1,14 +1,14 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const kafka = require('kafka-node');
-const bp = require('body-parser');
+const environment = process.env;
 
 /* GET home page. */
 router.get('/kafka/publish', function (req, res, next) {
     console.log("message sent");
     try {
         const Producer = kafka.Producer;
-        const client = new kafka.KafkaClient('localhost:9092');
+        const client = new kafka.KafkaClient(environment.KAFKA_HOST);
         const producer = new Producer(client);
         const kafka_topic = 'example';
         console.log(kafka_topic);
