@@ -1,5 +1,6 @@
 package com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.services;
 
+import com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.dtos.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -10,33 +11,33 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 @Service
 public class KafkaSender {
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, UserDTO> kafkaTemplate;
     Logger logger = LoggerFactory.getLogger(KafkaSender.class);
 
-    KafkaSender(KafkaTemplate<String, String> kafkaTemplate) {
+    KafkaSender(KafkaTemplate<String, UserDTO> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void sendMessage(String topicName, String message) {
-        kafkaTemplate.send(topicName, message);
+    public void sendMessage(String topicName, UserDTO userDTO) {
+        kafkaTemplate.send(topicName, userDTO);
     }
 
-    void sendMessageWithCallback(String message, String topicName) {
-        ListenableFuture<SendResult<String, String>> future =
-                kafkaTemplate.send(topicName, message);
+    void sendMessageWithCallback(String topicName, UserDTO userDTO) {
+        ListenableFuture<SendResult<String, UserDTO>> future =
+                kafkaTemplate.send(topicName, userDTO);
 
-        future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
+        future.addCallback(new ListenableFutureCallback<SendResult<String, UserDTO>>() {
             @Override
-            public void onSuccess(SendResult<String, String> result) {
+            public void onSuccess(SendResult<String, UserDTO> result) {
                 logger.info("Message [{}] delivered with offset {}",
-                        message,
+                        userDTO,
                         result.getRecordMetadata().offset());
             }
 
             @Override
             public void onFailure(Throwable ex) {
                 logger.warn("Unable to deliver message [{}]. {}",
-                        message,
+                        userDTO,
                         ex.getMessage());
             }
         });

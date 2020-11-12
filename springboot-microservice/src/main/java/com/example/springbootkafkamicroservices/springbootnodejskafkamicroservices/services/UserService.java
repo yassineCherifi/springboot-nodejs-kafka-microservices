@@ -5,6 +5,7 @@ import com.example.springbootkafkamicroservices.springbootnodejskafkamicroservic
 import com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.mappers.UserMapper;
 import com.example.springbootkafkamicroservices.springbootnodejskafkamicroservices.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    private final KafkaSender kafkaSender;
 
     private final UserMapper userMapper;
 
@@ -37,7 +40,11 @@ public class UserService {
      */
     public UserDTO getUserById(Long id) {
         return userRepository.findById(id)
-                .map(userMapper::userToUserDto)
+                .map(user -> {
+                    UserDTO userDto = userMapper.userToUserDto(user);
+                    kafkaSender.sendMessage("topic1",userDto);
+                    return userDto  ;
+                })
                 .orElseThrow(() -> new NotFoundException("error.user.not-found"));
     }
 }
